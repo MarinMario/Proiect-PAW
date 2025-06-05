@@ -16,11 +16,17 @@ namespace Biblioteca.Forms
     {
 
         public List<Cititor> DataSource { get; set; }
+        public ToolStripStatusLabel StatusLabel { get; set; }
         public CrudCititor()
         {
             if (DataSource == null)
             {
                 DataSource = new List<Cititor>();
+            }
+
+            if (StatusLabel == null)
+            {
+                StatusLabel = new ToolStripStatusLabel();
             }
 
             InitializeComponent();
@@ -94,6 +100,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@nume", cititor.Nume);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cititor {cititor.Nume} adaugat cu succes!";
         }
 
         private void updateItemInDb(Cititor cititor)
@@ -106,6 +114,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@id", cititor.Id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cititor {cititor.Nume} actualizat cu succes!";
         }
 
         private void deleteFromDb(int id)
@@ -117,6 +127,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@id", id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cititor cu Id {id} sters cu succes!";
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

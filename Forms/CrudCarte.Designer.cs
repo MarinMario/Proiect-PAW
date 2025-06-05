@@ -11,6 +11,7 @@
 
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             txtId = new TextBox();
             txtTitlu = new TextBox();
             txtDescriere = new TextBox();
@@ -22,6 +23,8 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            errorProvider1 = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // txtId
@@ -75,7 +78,7 @@
             // 
             listBoxBooks.Location = new Point(0, 1);
             listBoxBooks.Name = "listBoxBooks";
-            listBoxBooks.Size = new Size(490, 490);
+            listBoxBooks.Size = new Size(490, 484);
             listBoxBooks.TabIndex = 11;
             listBoxBooks.SelectedIndexChanged += listBoxBooks_SelectedIndexChanged;
             // 
@@ -115,6 +118,10 @@
             label4.TabIndex = 10;
             label4.Text = "Autor";
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // CrudCarte
             // 
             Controls.Add(label4);
@@ -131,6 +138,7 @@
             Name = "CrudCarte";
             Size = new Size(840, 474);
             Load += CrudCarte_Load;
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -140,5 +148,6 @@
         private Label label3;
         private Label label4;
         private System.ComponentModel.IContainer components;
+        private ErrorProvider errorProvider1;
     }
 }

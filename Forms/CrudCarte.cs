@@ -11,6 +11,7 @@ namespace Biblioteca.Forms {
     public partial class CrudCarte : UserControl
     {
         public List<Carte> DataSource { get; set; }
+        public ToolStripStatusLabel StatusLabel { get; set; }
 
         public CrudCarte()
         {
@@ -19,7 +20,30 @@ namespace Biblioteca.Forms {
                 DataSource = new List<Carte>();
             }
 
+            if (StatusLabel == null)
+            {
+                StatusLabel = new ToolStripStatusLabel();
+            }
+
             InitializeComponent();
+
+            txtId.Validating += txtBoxId_Validating;
+        }
+
+        private void txtBoxId_Validating(object sender, EventArgs e) 
+        {
+
+            int id = -1;
+            int.TryParse(txtId.Text, out id);
+
+            if (id == -1) 
+            {
+                errorProvider1.SetError(txtId, "Id-ul trebuie sa fie un numar.");
+            }
+            else
+            {
+                errorProvider1.SetError(txtId, "");
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -28,6 +52,14 @@ namespace Biblioteca.Forms {
             try
             {
                 var parsedId = int.Parse(txtId.Text);
+
+                if (parsedId < 0)
+                {
+                    errorProvider1.SetError(txtId, "Id-ul trebuie sa fie mai mare sau egal cu 0.");
+                    StatusLabel.Text = $"Cartea {txtTitlu.Text} nu a putut fi adaugata.";
+                    return;
+                }
+
                 var idList = DataSource.Select(v => v.Id).ToList();
 
                 Carte book = new Carte
@@ -54,7 +86,8 @@ namespace Biblioteca.Forms {
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Validation failed: " + ex.Message, "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               errorProvider1.SetError(txtId, "Id-ul trebuie sa fie un numar.");
+               StatusLabel.Text = $"Cartea {txtTitlu.Text} nu a putut fi adaugata.";
             }
         }
 
@@ -80,6 +113,8 @@ namespace Biblioteca.Forms {
             cmd.Parameters.AddWithValue("@autor", carte.Autor);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cartea {carte.Titlu} adaugata cu succes!";
         }
 
         private void updateItemInDb(Carte carte)
@@ -94,6 +129,8 @@ namespace Biblioteca.Forms {
             cmd.Parameters.AddWithValue("@id", carte.Id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cartea {carte.Titlu} actualizata cu succes!";
         }
 
         private void deleteFromDB(int id)
@@ -105,6 +142,8 @@ namespace Biblioteca.Forms {
             cmd.Parameters.AddWithValue("@id", id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Cartea cu Id {id} stearsa cu succes!";
         }
         public void UpdateBookList()
         {

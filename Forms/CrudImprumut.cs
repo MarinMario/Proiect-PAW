@@ -16,11 +16,18 @@ namespace Biblioteca.Forms
     {
 
         public List<Imprumut> DataSource { get; set; }
+        public ToolStripStatusLabel StatusLabel { get; set; }
+
         public CrudImprumut()
         {
             if (DataSource == null)
             {
                 DataSource = new List<Imprumut>();
+            }
+
+            if (StatusLabel == null)
+            {
+                StatusLabel = new ToolStripStatusLabel();
             }
 
             InitializeComponent();
@@ -89,6 +96,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@data", imprumut.DataImprumut);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Imprumutul cu ID {imprumut.Id} a fost adaugat cu succes.";
         }
 
         private void updateItemInDb(Imprumut imprumut)
@@ -103,6 +112,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@id", imprumut.Id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Imprumutul cu ID {imprumut.Id} a fost actualizat cu succes.";
         }
 
         private void removeFromDb(int id)
@@ -114,6 +125,8 @@ namespace Biblioteca.Forms
             cmd.Parameters.AddWithValue("@id", id);
 
             cmd.ExecuteNonQuery();
+
+            StatusLabel.Text = $"Imprumutul cu ID {id} a fost sters cu succes.";
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
