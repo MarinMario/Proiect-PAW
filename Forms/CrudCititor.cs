@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -43,10 +44,12 @@ namespace Biblioteca.Forms
                 {
                     var index = idList.FindIndex(id => id == parsedId);
                     DataSource[index] = reader;
+                    updateItemInDb(reader);
                 }
                 else
                 {
                     DataSource.Add(reader);
+                    addToDb(reader);
                 }
 
                 UpdateReaderList();
@@ -75,9 +78,45 @@ namespace Biblioteca.Forms
         {
             if (listBox1.SelectedIndex >= 0)
             {
+                var id = (listBox1.SelectedItem as Cititor).Id;
+                deleteFromDb(id);
                 DataSource.RemoveAt(listBox1.SelectedIndex);
                 UpdateReaderList();
             }
+        }
+
+        private int addToDb(Cititor cititor)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("INSERT INTO Cititor (Nume) VALUES (@nume); SELECT last_insert_rowid();", conn);
+            cmd.Parameters.AddWithValue("@nume", cititor.Nume);
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
+        private void updateItemInDb(Cititor cititor)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("UPDATE Cititor SET Nume = @nume WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@nume", cititor.Nume);
+            cmd.Parameters.AddWithValue("@id", cititor.Id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private void deleteFromDb(int id)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("DELETE FROM Cititor WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.ExecuteNonQuery();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
