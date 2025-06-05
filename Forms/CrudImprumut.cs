@@ -11,15 +11,15 @@ using System.Windows.Forms;
 
 namespace Biblioteca.Forms
 {
-    public partial class CrudCititor : UserControl
+    public partial class CrudImprumut : UserControl
     {
 
-        public List<Cititor> DataSource { get; set; }
-        public CrudCititor()
+        public List<Imprumut> DataSource { get; set; }
+        public CrudImprumut()
         {
             if (DataSource == null)
             {
-                DataSource = new List<Cititor>();
+                DataSource = new List<Imprumut>();
             }
 
             InitializeComponent();
@@ -33,20 +33,22 @@ namespace Biblioteca.Forms
                 var parsedId = int.Parse(textBox1.Text);
                 var idList = DataSource.Select(v => v.Id).ToList();
 
-                Cititor reader = new Cititor
+                Imprumut imprumut = new Imprumut
                 {
                     Id = parsedId,
-                    Nume = textBox2.Text
+                    IdCarte = int.Parse(textBox2.Text),
+                    IdCititor = int.Parse(textBox3.Text),
+                    DataImprumut = textBox4.Text
                 };
 
                 if (idList.Contains(parsedId))
                 {
                     var index = idList.FindIndex(id => id == parsedId);
-                    DataSource[index] = reader;
+                    DataSource[index] = imprumut;
                 }
                 else
                 {
-                    DataSource.Add(reader);
+                    DataSource.Add(imprumut);
                 }
 
                 UpdateReaderList();
@@ -69,6 +71,8 @@ namespace Biblioteca.Forms
         {
             textBox1.Clear();
             textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -82,10 +86,12 @@ namespace Biblioteca.Forms
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem is Cititor selectedReader)
+            if (listBox1.SelectedItem is Imprumut selectedImprumut)
             {
-                textBox1.Text = selectedReader.Id.ToString();
-                textBox2.Text = selectedReader.Nume;
+                textBox1.Text = selectedImprumut.Id.ToString();
+                textBox2.Text = selectedImprumut.IdCititor.ToString();
+                textBox3.Text = selectedImprumut.IdCarte.ToString();
+                textBox4.Text = selectedImprumut.DataImprumut;
             }
         }
 
@@ -95,12 +101,12 @@ namespace Biblioteca.Forms
             {
                 if (reader.Id.ToString() == textBox1.Text)
                 {
-                    button1.Text = "Modifica Cititor";
+                    button1.Text = "Modifica Imprumut";
                     return;
                 }
             }
 
-            button1.Text = "Adauga Cititor";
+            button1.Text = "Adauga Imprumut";
         }
     }
 }

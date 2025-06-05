@@ -35,11 +35,13 @@ namespace Biblioteca.Forms
             tabPage1 = new TabPage();
             crudCarte1 = new CrudCarte();
             tabPage2 = new TabPage();
-            tabPage3 = new TabPage();
             crudCititor1 = new CrudCititor();
+            tabPage3 = new TabPage();
+            crudImprumut1 = new CrudImprumut();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
+            tabPage3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -82,22 +84,30 @@ namespace Biblioteca.Forms
             tabPage2.Text = "Cititori";
             tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
-            // 
-            tabPage3.Location = new Point(4, 29);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(950, 605);
-            tabPage3.TabIndex = 2;
-            tabPage3.Text = "Imprumuturi";
-            tabPage3.UseVisualStyleBackColor = true;
-            // 
             // crudCititor1
             // 
             crudCititor1.Location = new Point(0, 0);
             crudCititor1.Name = "crudCititor1";
             crudCititor1.Size = new Size(855, 505);
             crudCititor1.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(crudImprumut1);
+            tabPage3.Location = new Point(0, 0);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(950, 600);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Imprumuturi";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // crudImprumut1
+            // 
+            crudImprumut1.Location = new Point(0, 0);
+            crudImprumut1.Name = "crudImprumut1";
+            crudImprumut1.Size = new Size(927, 517);
+            crudImprumut1.TabIndex = 0;
             // 
             // MainScreen
             // 
@@ -111,6 +121,7 @@ namespace Biblioteca.Forms
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
+            tabPage3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -121,5 +132,6 @@ namespace Biblioteca.Forms
         private CrudCarte crudCarte1;
         private TabPage tabPage3;
         private CrudCititor crudCititor1;
+        private CrudImprumut crudImprumut1;
     }
 }

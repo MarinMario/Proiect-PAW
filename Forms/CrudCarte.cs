@@ -26,6 +26,8 @@ namespace Biblioteca.Forms {
             try
             {
                 var parsedId = int.Parse(txtId.Text);
+                var idList = DataSource.Select(v => v.Id).ToList();
+
                 Carte book = new Carte
                 {
                     Id = parsedId,
@@ -34,7 +36,15 @@ namespace Biblioteca.Forms {
                     Autor = txtAutor.Text
                 };
 
-                DataSource.Add(book);
+                if (idList.Contains(parsedId))
+                {
+                    var index = idList.FindIndex(id => id == parsedId);
+                    DataSource[index] = book;
+                } else
+                {
+                    DataSource.Add(book);
+                }
+
                 UpdateBookList();
                 ClearInputs();
             }
