@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
+using System.Data.SQLite;
+
 
 namespace Biblioteca.Forms {
     public partial class CrudCarte : UserControl
@@ -40,9 +42,11 @@ namespace Biblioteca.Forms {
                 {
                     var index = idList.FindIndex(id => id == parsedId);
                     DataSource[index] = book;
+                    updateItemInDb(book);
                 } else
                 {
                     DataSource.Add(book);
+                    addToDb(book);
                 }
 
                 UpdateBookList();
@@ -58,11 +62,50 @@ namespace Biblioteca.Forms {
         {
             if (listBoxBooks.SelectedIndex >= 0)
             {
+                var selectedId = (listBoxBooks.SelectedItem as Carte).Id;
+                deleteFromDB(selectedId);
                 DataSource.RemoveAt(listBoxBooks.SelectedIndex);
                 UpdateBookList();
             }
         }
 
+        private void addToDb(Carte carte)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("INSERT INTO Carte (Titlu, Descriere, Autor) VALUES (@titlu, @descriere, @autor)", conn);
+            cmd.Parameters.AddWithValue("@titlu", carte.Titlu);
+            cmd.Parameters.AddWithValue("@descriere", carte.Descriere);
+            cmd.Parameters.AddWithValue("@autor", carte.Autor);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private void updateItemInDb(Carte carte)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("UPDATE Carte SET Titlu = @titlu, Descriere = @descriere, Autor = @autor WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@titlu", carte.Titlu);
+            cmd.Parameters.AddWithValue("@descriere", carte.Descriere);
+            cmd.Parameters.AddWithValue("@autor", carte.Autor);
+            cmd.Parameters.AddWithValue("@id", carte.Id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private void deleteFromDB(int id)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("DELETE FROM Carte WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.ExecuteNonQuery();
+        }
         public void UpdateBookList()
         {
             listBoxBooks.DataSource = null;
