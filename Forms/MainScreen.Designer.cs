@@ -150,20 +150,20 @@ namespace Biblioteca.Forms
             toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { printDocumentToolStripMenuItem, exportTXTFileToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new Size(66, 24);
-            toolStripMenuItem1.Text = "Export";
+            toolStripMenuItem1.Text = "&Export";
             // 
             // printDocumentToolStripMenuItem
             // 
             printDocumentToolStripMenuItem.Name = "printDocumentToolStripMenuItem";
             printDocumentToolStripMenuItem.Size = new Size(224, 26);
-            printDocumentToolStripMenuItem.Text = "Print Document";
+            printDocumentToolStripMenuItem.Text = "&Print Document";
             printDocumentToolStripMenuItem.Click += printDocumentToolStripMenuItem_Click;
             // 
             // exportTXTFileToolStripMenuItem
             // 
             exportTXTFileToolStripMenuItem.Name = "exportTXTFileToolStripMenuItem";
             exportTXTFileToolStripMenuItem.Size = new Size(224, 26);
-            exportTXTFileToolStripMenuItem.Text = "Export TXT File";
+            exportTXTFileToolStripMenuItem.Text = "&Save File";
             exportTXTFileToolStripMenuItem.Click += exportTXTFileToolStripMenuItem_Click;
             // 
             // printDocument1
