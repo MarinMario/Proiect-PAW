@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.Data
 {
-    internal class Imprumut
+    public class Imprumut
     {
+        public int IdCititor { get; set; }
+        public int IdCarte { get; set; }
+        public string DataImprumut { get; set; }
     }
 }

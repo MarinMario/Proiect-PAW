@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Biblioteca.Data
 {
-    internal class Cititor
+    public class Cititor
     {
+        public int Id { get; set; }
+        public string Nume { get; set; }
     }
 }
