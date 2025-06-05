@@ -85,7 +85,7 @@ namespace Biblioteca.Forms
             }
         }
 
-        private int addToDb(Cititor cititor)
+        private void addToDb(Cititor cititor)
         {
             using var conn = new SQLiteConnection(Global.ConnectionString);
             conn.Open();
@@ -93,7 +93,7 @@ namespace Biblioteca.Forms
             var cmd = new SQLiteCommand("INSERT INTO Cititor (Nume) VALUES (@nume); SELECT last_insert_rowid();", conn);
             cmd.Parameters.AddWithValue("@nume", cititor.Nume);
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.ExecuteNonQuery();
         }
 
         private void updateItemInDb(Cititor cititor)

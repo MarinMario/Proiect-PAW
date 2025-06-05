@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -45,10 +46,12 @@ namespace Biblioteca.Forms
                 {
                     var index = idList.FindIndex(id => id == parsedId);
                     DataSource[index] = imprumut;
+                    updateItemInDb(imprumut);
                 }
                 else
                 {
                     DataSource.Add(imprumut);
+                    addToDb(imprumut);
                 }
 
                 UpdateReaderList();
@@ -75,10 +78,52 @@ namespace Biblioteca.Forms
             textBox4.Clear();
         }
 
+        private void addToDb(Imprumut imprumut)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("INSERT INTO Imprumut (IdCititor, IdCarte, DataImprumut) VALUES (@idCititor, @idCarte, @data); SELECT last_insert_rowid();", conn);
+            cmd.Parameters.AddWithValue("@idCititor", imprumut.IdCititor);
+            cmd.Parameters.AddWithValue("@idCarte", imprumut.IdCarte);
+            cmd.Parameters.AddWithValue("@data", imprumut.DataImprumut);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private void updateItemInDb(Imprumut imprumut)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("UPDATE Imprumut SET IdCititor = @idCititor, IdCarte = @idCarte, DataImprumut = @data WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@idCititor", imprumut.IdCititor);
+            cmd.Parameters.AddWithValue("@idCarte", imprumut.IdCarte);
+            cmd.Parameters.AddWithValue("@data", imprumut.DataImprumut);
+            cmd.Parameters.AddWithValue("@id", imprumut.Id);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        private void removeFromDb(int id)
+        {
+            using var conn = new SQLiteConnection(Global.ConnectionString);
+            conn.Open();
+
+            var cmd = new SQLiteCommand("DELETE FROM Imprumut WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.ExecuteNonQuery();
+        }
+
         private void btnRemove_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
             {
+
+                var id = (listBox1.SelectedItem as Imprumut).Id;
+                removeFromDb(id);
+
                 DataSource.RemoveAt(listBox1.SelectedIndex);
                 UpdateReaderList();
             }
