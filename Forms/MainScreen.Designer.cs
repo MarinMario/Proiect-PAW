@@ -38,6 +38,8 @@ namespace Biblioteca.Forms
             crudCititor1 = new CrudCititor();
             tabPage3 = new TabPage();
             crudImprumut1 = new CrudImprumut();
+            tabPage4 = new TabPage();
+            barChart1 = new BarChart();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             menuStrip1 = new MenuStrip();
@@ -50,6 +52,7 @@ namespace Biblioteca.Forms
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
+            tabPage4.SuspendLayout();
             statusStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -59,11 +62,13 @@ namespace Biblioteca.Forms
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage4);
             tabControl1.Location = new Point(0, 36);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(918, 532);
             tabControl1.TabIndex = 3;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
             // 
             // tabPage1
             // 
@@ -119,13 +124,32 @@ namespace Biblioteca.Forms
             crudImprumut1.Size = new Size(927, 517);
             crudImprumut1.TabIndex = 0;
             // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(barChart1);
+            tabPage4.Location = new Point(4, 29);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new Padding(3);
+            tabPage4.Size = new Size(910, 499);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "Statistici";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // barChart1
+            // 
+            barChart1.DataSource = null;
+            barChart1.Location = new Point(23, 28);
+            barChart1.Name = "barChart1";
+            barChart1.Size = new Size(700, 400);
+            barChart1.TabIndex = 0;
+            // 
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
             statusStrip1.Location = new Point(0, 612);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(961, 26);
+            statusStrip1.Size = new Size(920, 26);
             statusStrip1.TabIndex = 4;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -141,7 +165,7 @@ namespace Biblioteca.Forms
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(961, 28);
+            menuStrip1.Size = new Size(920, 28);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -155,14 +179,14 @@ namespace Biblioteca.Forms
             // printDocumentToolStripMenuItem
             // 
             printDocumentToolStripMenuItem.Name = "printDocumentToolStripMenuItem";
-            printDocumentToolStripMenuItem.Size = new Size(224, 26);
+            printDocumentToolStripMenuItem.Size = new Size(195, 26);
             printDocumentToolStripMenuItem.Text = "&Print Document";
             printDocumentToolStripMenuItem.Click += printDocumentToolStripMenuItem_Click;
             // 
             // exportTXTFileToolStripMenuItem
             // 
             exportTXTFileToolStripMenuItem.Name = "exportTXTFileToolStripMenuItem";
-            exportTXTFileToolStripMenuItem.Size = new Size(224, 26);
+            exportTXTFileToolStripMenuItem.Size = new Size(195, 26);
             exportTXTFileToolStripMenuItem.Text = "&Save File";
             exportTXTFileToolStripMenuItem.Click += exportTXTFileToolStripMenuItem_Click;
             // 
@@ -184,7 +208,7 @@ namespace Biblioteca.Forms
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(961, 638);
+            ClientSize = new Size(920, 638);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Controls.Add(tabControl1);
@@ -196,6 +220,7 @@ namespace Biblioteca.Forms
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
+            tabPage4.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
@@ -220,5 +245,7 @@ namespace Biblioteca.Forms
         private ToolStripMenuItem exportTXTFileToolStripMenuItem;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog printPreviewDialog1;
+        private TabPage tabPage4;
+        private BarChart barChart1;
     }
 }

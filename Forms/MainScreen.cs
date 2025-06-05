@@ -107,6 +107,7 @@ namespace Biblioteca.Forms
             toolStripStatusLabel1.Text = "Incarcarea datelor a fost finalizata cu succes.";
         }
 
+
         private void printDocumentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (PrintPreviewDialog previewDialog = new PrintPreviewDialog())
@@ -197,6 +198,21 @@ namespace Biblioteca.Forms
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 exportToFile(saveFileDialog.FileName);
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage selectedTab = tabControl1.SelectedTab;
+
+            if(selectedTab.Name == "tabPage4") 
+            {
+                barChart1.DataSource = new Dictionary<string, int> 
+                {
+                    {"Carti", Books.Count },
+                    {"Cititori", Readers.Count },
+                    {"Imprumuturi", Imprumuturi.Count }
+                };
             }
         }
     }
